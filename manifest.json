@@ -1,0 +1,25 @@
+{
+  "name": "irctc ticket booking",
+  "version": "1.0",
+  "permissions": ["activeTab", "scripting","tabs","background"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Book Ticket Quickly"
+  },
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": ["https://www.irctc.co.in/nget/train-search*"],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": [
+    "https://tessdata.projectnaptha.com/*.gz",
+    "https://github.com/naptha/tessdata/blob/gh-pages/*.gz?raw=true"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}
