@@ -163,10 +163,13 @@ waitForElement(
   ".captcha-img",
   async (elements) => {
     const element = elements[0];
-    // console.log(element.src);
-    const ans = await chrome.runtime.sendMessage({type:"prompt", imageUrl: element.src});
-    console.log("from content.js",ans);
-    
+    console.log(element.src);
+    const ans = await chrome.runtime.sendMessage({
+      type: "captcha",
+      imageUrl: element.src,
+    });
+    console.log("from content.js", ans);
+
     await create_img(element);
     document
       .getElementsByClassName("created-img")[0]
@@ -178,7 +181,7 @@ waitForElement(
   60000
 );
 
-function search(){
+function search() {
   waitForElement(
     ".ui-inputtext",
     async (element) => {
@@ -194,16 +197,17 @@ function search(){
             ".pre-avl .AVAILABLE",
             (element) => {
               // console.log(element);
-  
+
               for (let i = 0; i < element.length; i++) {
                 //   // console.log(parent);
                 element[i].click();
                 const parent =
                   element[i].parentElement.parentElement.parentElement
-                    .parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-                const train = parent.document.querySelector("..train-heading");    
+                    .parentElement.parentElement.parentElement.parentElement
+                    .parentElement.parentElement.parentElement;
+                const train = parent.document.querySelector(".train-heading");
                 console.log(train.innerHTML, element[i].innerHTML);
-  
+
                 element[i].style.backgroundColor = "red";
               }
             },

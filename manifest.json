@@ -1,5 +1,6 @@
 {
   "name": "irctc ticket booking",
+  "description": "This extension will help you to book ticket quickly",
   "version": "1.0",
   "permissions": ["activeTab", "scripting","tabs","background"],
   "background": {
@@ -7,6 +8,12 @@
   },
   "action": {
     "default_title": "Book Ticket Quickly"
+  },
+  "icons":{
+    "16":"Images/icon.png",
+    "32":"Images/icon.png",
+    "48":"Images/icon.png",
+    "128":"Images/icon.png"
   },
   "manifest_version": 3,
   "content_scripts": [
@@ -16,8 +23,8 @@
     }
   ],
   "host_permissions": [
-    "https://tessdata.projectnaptha.com/*.gz",
-    "https://github.com/naptha/tessdata/blob/gh-pages/*.gz?raw=true"
+    "https://api.ocr.space/parse/image",
+    "https://www.irctc.co.in/*"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
