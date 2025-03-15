@@ -20,8 +20,8 @@ function waitForElement(selector, callback, timeout = 10000) {
   }, 100);
 }
 
-function enter_captcha() {
-  let captcha = prompt("Enter the captcha");
+function enter_captcha(captcha) {
+  // let captcha = prompt("Enter the captcha");
   const enter = () => {
     waitForElement("#captcha", (element) => {
       element[0].value = captcha;
@@ -146,16 +146,23 @@ async function click_search(element) {
   element[1].value = "DALSINGH SARAI - DSS";
   element[1].dispatchEvent(new Event("input", { bubbles: true }));
 
-  const btn = document.getElementsByClassName("train_Search");
-  // console.log(btn);
-  for (let i = 0; i < btn.length; i++) {
-    if (btn[i].innerText === "Search") {
-      // console.log(btn[i]);
-
-      btn[i].click();
-      break;
+  waitForElement(".train_Search", (element) => {
+    for (let i = 0; i < element.length; i++) {
+      if (element[i].innerText === "Search") {
+        element[i].click();
+        break;
+      }
     }
-  }
+  });
+  // console.log(btn);
+  // for (let i = 0; i < btn.length; i++) {
+  //   if (btn[i].innerText === "Search") {
+  //     // console.log(btn[i]);
+
+  //     btn[i].click();
+  //     break;
+  //   }
+  // }
 }
 // #captcha
 
@@ -164,19 +171,24 @@ waitForElement(
   async (elements) => {
     const element = elements[0];
     console.log(element.src);
-    const ans = await chrome.runtime.sendMessage({
-      type: "captcha",
-      imageUrl: element.src,
-    });
-    console.log("from content.js", ans);
-
-    await create_img(element);
-    document
-      .getElementsByClassName("created-img")[0]
-      .addEventListener("load", () => {
-        enter_captcha();
+    
+      const ans = await chrome.runtime.sendMessage({
+        type: "captcha",
+        imageUrl: element.src,
       });
+  // waitForElement(".glyphicon-repeat",(element)=>{
+    //   console.log(element);
+    //   element[0].click();
+    // })
+    // console.log("from content.js", ans);
     fill_username_password();
+    enter_captcha(ans);
+    // await create_img(element);
+    // document
+    //   .getElementsByClassName("created-img")[0]
+    //   .addEventListener("load", () => {
+
+    //   });
   },
   60000
 );
